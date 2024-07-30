@@ -1,0 +1,8 @@
+# Credential files
+*.json
+
+# Virtual environment
+venv/
+
+# VSCode
+.vscode/

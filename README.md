@@ -1,0 +1,1 @@
+Follow the instructions at https://developers.google.com/gmail/api/quickstart/python to create a `credentials.json` and store in the project directory.
