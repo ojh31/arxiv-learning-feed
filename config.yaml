@@ -25,6 +25,36 @@ scoring:
       value: -50
     - title: "aerodynamics"
       value: -50
+    - title: "cloud"
+      value: -50
+    - title: "quantum"
+      value: -50
+    - title: "diffusion"
+      value: -20
+    - title: "algebraic"
+      value: -20
+    - title: "monte carlo"
+      value: -10
+    - title: "explainability"
+      value: -10
+    - title: "privacy"
+      value: -20
+    - title: "differential equation"
+      value: -50
+    - title: "finite group"
+      value: -50
+    - title: "vulnerab"
+      value: 50
+    - title: "federated"
+      value: -50
+    - title: "graph representation"
+      value: -20
+    - title: "molecul"
+      value: -50
+    - title: "safe"
+      value: 50
+    - title: "guarantee"
+      value: 30
   authors:
     - author: "Adam Gleave"
       value: 300
@@ -34,4 +64,6 @@ scoring:
     - tag: "cs.CV"
       value: -200
     - tag: "cs.SD"
+      value: -200
+    - tag: "cs.IV"
       value: -200
