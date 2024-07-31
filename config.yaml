@@ -2,3 +2,20 @@ sender: oskar.hollinsworth@gmail.com
 recipient: oskar@far.ai
 subject: "Today's Machine Learning Papers from arXiv"
 url: "http://export.arxiv.org/api/query?search_query=cat:cs.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending"
+scoring:
+  bias: -20
+  titles:
+    - title: "interpretability"
+      value: 100
+    - title: "alignment"
+      value: 50
+    - title: "grokking"
+      value: 20
+  authors:
+    - author: "Adam Gleave"
+      value: 300
+    - author: "Neel Nanda"
+      value: 200
+  tags:
+    - tag: "cs.CV"
+      value: -200
