@@ -33,3 +33,5 @@ scoring:
   tags:
     - tag: "cs.CV"
       value: -200
+    - tag: "cs.SD"
+      value: -200

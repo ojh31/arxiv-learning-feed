@@ -11,6 +11,7 @@ def score_entry(entry: FeedParserDict, config: dict) -> int:
             if author_dict["author"] in entry_author.name:
                 score += author_dict["value"]
     for tag_dict in config["scoring"]["tags"]:
-        if tag_dict["tag"] in entry.tags:
+        entry_tags = [t.term for t in entry.tags]
+        if tag_dict["tag"] in entry_tags:
             score += tag_dict["value"]
     return score
