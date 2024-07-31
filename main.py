@@ -1,5 +1,6 @@
 import base64
 import os
+from pathlib import Path
 from email.message import EmailMessage
 
 import feedparser
@@ -13,6 +14,7 @@ from jinja2 import Environment, FileSystemLoader
 
 from scoring import score_entry
 
+ROOT = Path(__file__).parent
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
@@ -28,10 +30,12 @@ def get_gmail_service():
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file("credentials.json", SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file(
+                ROOT / "credentials.json", SCOPES
+            )
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
-        with open("token.json", "w") as token:
+        with open(ROOT / "token.json", "w") as token:
             token.write(creds.to_json())
 
     return build("gmail", "v1", credentials=creds)
@@ -60,7 +64,7 @@ def create_message(sender, to, subject, html_content):
 
 def main():
     # Parse the yaml config
-    with open("config.yaml", "r") as file:
+    with open(ROOT / "config.yaml", "r") as file:
         config = yaml.safe_load(file)
         print(config)
 
@@ -82,7 +86,7 @@ def main():
     papers = sorted(papers, key=lambda x: x["score"], reverse=True)
 
     # Set up Jinja2 environment
-    env = Environment(loader=FileSystemLoader("."))
+    env = Environment(loader=FileSystemLoader(ROOT))
     template = env.get_template("email_template.html")
 
     # Render the template with our data
