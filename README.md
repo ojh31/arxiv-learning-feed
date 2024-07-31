@@ -1,4 +1,9 @@
+## Authentication
 Follow the instructions at https://developers.google.com/gmail/api/quickstart/python to create a `credentials.json` and store in the project directory.
+
+## Scoring
+Inspired by https://cundy.me/post/elfeed/:
+> I’m aiming for a score of 0 for papers I may want to read, 100 for papers I will probably want to read, 200 for papers I will very likely want to read, and 300 for papers I will certainly want to read
 
 ## Example output
 

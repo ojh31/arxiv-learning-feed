@@ -11,6 +11,8 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from jinja2 import Environment, FileSystemLoader
 
+from scoring import score_entry
+
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
@@ -74,8 +76,10 @@ def main():
                 "authors": ", ".join(author.name for author in entry.authors),
                 "summary": entry.summary,
                 "link": entry.link,
+                "score": score_entry(entry, config),
             }
         )
+    papers = sorted(papers, key=lambda x: x["score"], reverse=True)
 
     # Set up Jinja2 environment
     env = Environment(loader=FileSystemLoader("."))
