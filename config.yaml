@@ -11,6 +11,20 @@ scoring:
       value: 50
     - title: "grokking"
       value: 20
+    - title: "gender"
+      value: -50
+    - title: "physics"
+      value: -50
+    - title: "hydrologic"
+      value: -50
+    - title: "disease"
+      value: -50
+    - title: "medical"
+      value: -50
+    - title: "fluid dynamics"
+      value: -50
+    - title: "aerodynamics"
+      value: -50
   authors:
     - author: "Adam Gleave"
       value: 300
