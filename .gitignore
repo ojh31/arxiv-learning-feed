@@ -9,3 +9,6 @@ venv/
 
 # Python
 __pycache__/
+
+# Output
+output/
