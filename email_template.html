@@ -2,23 +2,78 @@
 <html>
 <head>
     <style>
-        body { font-family: Arial, sans-serif; }
-        .paper { margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 20px; }
-        .title { font-weight: bold; color: #2c3e50; }
-        .authors { color: #34495e; }
-        .summary { color: #7f8c8d; }
-        .link { color: #3498db; }
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 800px; 
+            margin: 0 auto; 
+            padding: 0 20px;
+        }
+        .paper { 
+            margin-bottom: 15px; 
+            border-bottom: 1px solid #ddd; 
+            padding-bottom: 15px;
+            position: relative;
+        }
+        .paper-content {
+            display: flex;
+            margin-bottom: 5px;
+        }
+        .left-column, .right-column { 
+            flex: 1; 
+        }
+        .left-column {
+            display: flex;
+            align-items: baseline;
+        }
+        .title { 
+            font-weight: bold; 
+            color: #2c3e50; 
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .authors { 
+            color: #34495e; 
+            font-size: 0.9em; 
+        }
+        .score { 
+            color: #7f8c8d; 
+            font-size: 0.9em; 
+            white-space: nowrap;
+        }
+        .summary-text {
+            display: none;
+            width: calc(100% + 40px); /* Account for body padding */
+            background-color: #555;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 10px;
+            position: absolute;
+            left: -20px; /* Offset body padding */
+        }
+        .paper:hover .summary-text {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <h1>Recent Machine Learning Papers from arXiv</h1>
     {% for paper in papers %}
     <div class="paper">
-        <p class="title">{{ paper.title }}</p>
-        <p class="authors"><strong>Authors:</strong> {{ paper.authors }}</p>
-        <p class="summary"><strong>Summary:</strong> {{ paper.summary }}</p>
-        <p class="link"><a href="{{ paper.link }}">Read more</a></p>
-        <p class="score"><strong>Score:</strong> {{ paper.score }}</p>
+        <div class="paper-content">
+            <div class="left-column">
+                <span class="score">Score: {{ paper.score }}</span>
+                <span class="title" onclick="window.location.href='{{ paper.link }}'">
+                    {{ paper.title }}
+                </span>
+            </div>
+            <div class="right-column">
+                <p class="authors">{{ paper.authors }}</p>
+            </div>
+        </div>
+        <div class="summary-text">{{ paper.summary }}</div>
     </div>
     {% endfor %}
 </body>

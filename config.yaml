@@ -60,6 +60,8 @@ scoring:
       value: 300
     - author: "Neel Nanda"
       value: 200
+    - author: "Dan Hendrycks"
+      value: 100
   tags:
     - tag: "cs.CV"
       value: -200
