@@ -28,8 +28,11 @@
         .title { 
             font-weight: bold; 
             color: #2c3e50; 
-            cursor: pointer;
             margin-left: 10px;
+            text-decoration: none;
+        }
+        .title:hover {
+            text-decoration: underline;
         }
         .authors { 
             color: #34495e; 
@@ -42,7 +45,7 @@
         }
         .summary-text {
             display: none;
-            width: calc(100% + 40px); /* Account for body padding */
+            width: calc(100% + 40px);
             background-color: #555;
             color: #fff;
             text-align: left;
@@ -51,7 +54,7 @@
             box-sizing: border-box;
             margin-top: 10px;
             position: absolute;
-            left: -20px; /* Offset body padding */
+            left: -20px;
         }
         .paper:hover .summary-text {
             display: block;
@@ -65,9 +68,7 @@
         <div class="paper-content">
             <div class="left-column">
                 <span class="score">Score: {{ paper.score }}</span>
-                <span class="title" onclick="window.location.href='{{ paper.link }}'">
-                    {{ paper.title }}
-                </span>
+                <a href="{{ paper.link }}" class="title">{{ paper.title }}</a>
             </div>
             <div class="right-column">
                 <p class="authors">{{ paper.authors }}</p>
