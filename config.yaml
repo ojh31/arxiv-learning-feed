@@ -2,6 +2,7 @@ sender: oskar.hollinsworth@gmail.com
 recipient: oskar@far.ai
 subject: "Today's Machine Learning Papers from arXiv"
 url: "http://export.arxiv.org/api/query?search_query=cat:cs.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending"
+hours: 72
 scoring:
   bias: -20
   titles:
@@ -61,6 +62,20 @@ scoring:
       value: -30
     - title: "compiler"
       value: -50
+    - title: "health"
+      value: -50
+    - title: "marketing"
+      value: -50
+    - title: "manifold"
+      value: -30
+    - title: "martingale"
+      value: -30
+    - title: "robotic"
+      value: -50
+    - title: "image"
+      value: -30
+    - title: "recommend"
+      value: -30
   authors:
     - author: "Adam Gleave"
       value: 300

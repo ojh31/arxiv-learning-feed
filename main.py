@@ -1,7 +1,8 @@
 import base64
 import os
-from pathlib import Path
+import time
 from email.message import EmailMessage
+from pathlib import Path
 
 import feedparser
 import yaml
@@ -70,10 +71,15 @@ def main():
 
     # Parse the arXiv feed
     feed = feedparser.parse(config["url"])
+    filtered_entries: list[feedparser.FeedParserDict] = [
+        entry
+        for entry in feed.entries
+        if (time.time() - time.mktime(entry.published_parsed)) / 3600 < config["hours"]
+    ]
 
     # Prepare paper data
     papers = []
-    for entry in feed.entries:
+    for entry in filtered_entries:
         papers.append(
             {
                 "title": entry.title,
