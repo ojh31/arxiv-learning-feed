@@ -55,6 +55,12 @@ scoring:
       value: 50
     - title: "guarantee"
       value: 30
+    - title: "geometr"
+      value: -30
+    - title: "manufactur"
+      value: -30
+    - title: "compiler"
+      value: -50
   authors:
     - author: "Adam Gleave"
       value: 300

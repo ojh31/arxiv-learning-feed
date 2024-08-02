@@ -9,21 +9,23 @@
             padding: 0 20px;
         }
         .paper { 
-            margin-bottom: 15px; 
+            margin-bottom: 5px;
             border-bottom: 1px solid #ddd; 
-            padding-bottom: 15px;
+            padding-bottom: 5px;
             position: relative;
         }
         .paper-content {
             display: flex;
-            margin-bottom: 5px;
+            align-items: center;
         }
-        .left-column, .right-column { 
-            flex: 1; 
-        }
-        .left-column {
+        .left-column { 
+            flex: 3;
             display: flex;
-            align-items: baseline;
+            align-items: center;
+        }
+        .right-column { 
+            flex: 2;
+            align-items: right;
         }
         .title { 
             font-weight: bold; 
@@ -37,11 +39,14 @@
         .authors { 
             color: #34495e; 
             font-size: 0.9em; 
+            text-align: right;
+            margin: 0;
         }
         .score { 
             color: #7f8c8d; 
             font-size: 0.9em; 
             white-space: nowrap;
+            min-width: 80px;
         }
         .summary-text {
             display: none;
@@ -52,7 +57,7 @@
             border-radius: 6px;
             padding: 10px;
             box-sizing: border-box;
-            margin-top: 10px;
+            margin-top: 5px;
             position: absolute;
             left: -20px;
         }
