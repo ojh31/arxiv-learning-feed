@@ -1,4 +1,4 @@
-sender: oskar.hollinsworth@gmail.com
+sender: oskar@far.ai
 recipient: oskar@far.ai
 subject: "Today's Machine Learning Papers from arXiv"
 url: "http://export.arxiv.org/api/query?search_query=cat:cs.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending"
