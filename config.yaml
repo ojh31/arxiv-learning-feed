@@ -38,6 +38,8 @@ scoring:
       value: -10
     - title: "explainability"
       value: -10
+    - title: "explainable"
+      value: -10
     - title: "privacy"
       value: -20
     - title: "differential equation"
@@ -76,6 +78,13 @@ scoring:
       value: -30
     - title: "recommend"
       value: -30
+    - title: "jailbreak"
+      value: 30
+    - title: "robust"
+      value: 20
+    - title: "svm"
+      value: -50
+
   authors:
     - author: "Adam Gleave"
       value: 300
@@ -83,6 +92,10 @@ scoring:
       value: 200
     - author: "Dan Hendrycks"
       value: 100
+    - author: "David Bau"
+      value: 20
+    - author: "Samuel Marks"
+      value: 20
   tags:
     - tag: "cs.CV"
       value: -200
