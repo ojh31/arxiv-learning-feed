@@ -12,6 +12,8 @@ scoring:
       value: 50
     - title: "grokking"
       value: 20
+    - title: "attack"
+      value: 20
     - title: "gender"
       value: -50
     - title: "physics"
@@ -84,6 +86,47 @@ scoring:
       value: 20
     - title: "svm"
       value: -50
+    - title: "rheolog"
+      value: -50
+    - title: "muscle"
+      value: -50
+    - title: "latency"
+      value: -30  
+    - title: "accelerate"
+      value: -10
+    - title: "performance"
+      value: -10
+    - title: "energy"
+      value: -10
+    - title: "precision"
+      value: -10
+    - title: "ontology"
+      value: -10
+    - title: "compliance"
+      value: -30
+    - title: "random forest"
+      value: -50
+    - title: "regression"
+      value: -30
+    - title: "arthritis"
+      value: -200
+    - title: "heart"
+      value: -50
+    - title: "knee"
+    - title: "matrix"
+      value: -30
+    - title: "matrices"
+      value: -30
+    - title: "collaborative"
+      value: -30
+    - title: "traffic"
+      value: -50
+    - title: "climate"
+      value: -50
+    - title: "atmospher"
+      value: -50
+    - title: "social"
+      value: -30
 
   authors:
     - author: "Adam Gleave"
