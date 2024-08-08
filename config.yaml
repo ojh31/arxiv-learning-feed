@@ -161,12 +161,20 @@ scoring:
       value: -100
     - word: "vision"
       value: -50
+    - word: "speech"
+      value: -50
     - word: "cnn"
       value: -50
     - word: "topology"
       value: -50
     - word: "cluster"
       value: -30
+    - word: "ethereum"
+      value: -50
+    - word: "blockchain"
+      value: -50
+    - word: "crypto"
+      value: -50
   authors:
     - author: "Adam Gleave"
       value: 300

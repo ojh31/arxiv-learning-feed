@@ -1,6 +1,6 @@
 import base64
 import os
-import time
+from datetime import datetime, time, timedelta
 from email.message import EmailMessage
 from pathlib import Path
 
@@ -18,6 +18,13 @@ from scoring import score_entry
 ROOT = Path(__file__).parent
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
+
+
+def get_last_business_day():
+    today = datetime.now().date()
+    offset = max(1, (today.weekday() + 6) % 7 - 3)
+    last_business_day = today - timedelta(days=offset)
+    return datetime.combine(last_business_day, time.min)
 
 
 def get_gmail_service():
@@ -66,10 +73,11 @@ def create_message(sender, to, subject, html_content):
 def create_content(config: dict) -> str:
     # Parse the arXiv feed
     feed = feedparser.parse(config["url"])
+    last_business_day = get_last_business_day()
     filtered_entries: list[feedparser.FeedParserDict] = [
         entry
         for entry in feed.entries
-        if (time.time() - time.mktime(entry.published_parsed)) / 3600 < config["hours"]
+        if datetime(*entry.published_parsed[:6]) >= last_business_day
     ]
 
     # Prepare paper data
