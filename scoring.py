@@ -5,6 +5,7 @@ def score_entry(entry: FeedParserDict, config: dict) -> int:
     score = config["scoring"]["bias"]
     for title_dict in config["scoring"]["titles"]:
         if title_dict["title"] in entry.title.lower():
+            assert "value" in title_dict, f"Value not found in title_dict: {title_dict}"
             score += title_dict["value"]
     for author_dict in config["scoring"]["authors"]:
         for entry_author in entry.authors:

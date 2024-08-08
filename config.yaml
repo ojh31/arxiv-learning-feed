@@ -1,5 +1,5 @@
-sender: oskar@far.ai
-recipient: oskar@far.ai
+sender: oskar.hollinsworth@gmail.com
+recipient: oskar.hollinsworth@gmail.com
 subject: "Today's Machine Learning Papers from arXiv"
 url: "http://export.arxiv.org/api/query?search_query=cat:cs.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending"
 hours: 72
@@ -113,6 +113,7 @@ scoring:
     - title: "heart"
       value: -50
     - title: "knee"
+      value: -50
     - title: "matrix"
       value: -30
     - title: "matrices"
@@ -127,7 +128,28 @@ scoring:
       value: -50
     - title: "social"
       value: -30
-
+    - title: "backdoor"
+      value: 20
+    - title: "portfolio"
+      value: -50
+    - title: "compression"
+      value: -30
+    - title: "streaming"
+      value: -30
+    - title: "smoothing"
+      value: -30
+    - title: "translation"
+      value: -30
+    - title: "autonomous"
+      value: -50
+    - title: "wave"
+      value: -30
+    - title: "cox"
+      value: -20
+    - title: "regularization"
+      value: -10
+    - title: "sparse"
+      value: 20
   authors:
     - author: "Adam Gleave"
       value: 300
@@ -138,6 +160,8 @@ scoring:
     - author: "David Bau"
       value: 20
     - author: "Samuel Marks"
+      value: 20
+    - author: "Kellin Pelrine"
       value: 20
   tags:
     - tag: "cs.CV"

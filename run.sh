@@ -9,6 +9,6 @@ source venv/bin/activate
 # Create a timestamp
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
 
-# Run the Python script and save output with timestamp
+# Run the Python script and save both stdout and stderr output with timestamp
 mkdir -p output
-python main.py > "output/output_${TIMESTAMP}.txt"
+python main.py > "output/output_${TIMESTAMP}.txt" 2>&1

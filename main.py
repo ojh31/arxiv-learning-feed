@@ -63,12 +63,7 @@ def create_message(sender, to, subject, html_content):
     return {"raw": raw_message}
 
 
-def main():
-    # Parse the yaml config
-    with open(ROOT / "config.yaml", "r") as file:
-        config = yaml.safe_load(file)
-        print(config)
-
+def create_content(config: dict) -> str:
     # Parse the arXiv feed
     feed = feedparser.parse(config["url"])
     filtered_entries: list[feedparser.FeedParserDict] = [
@@ -97,6 +92,20 @@ def main():
 
     # Render the template with our data
     html_content = template.render(papers=papers)
+    return html_content
+
+
+def main():
+    # Parse the yaml config
+    with open(ROOT / "config.yaml", "r") as file:
+        config = yaml.safe_load(file)
+        print(config)
+    try:
+        html_content = create_content(config)
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        html_content = "<h1>An error occurred</h1>"
+        html_content += f"<p>{e}</p>"
 
     # Get Gmail service
     service = get_gmail_service()
