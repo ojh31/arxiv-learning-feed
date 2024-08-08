@@ -5,151 +5,168 @@ url: "http://export.arxiv.org/api/query?search_query=cat:cs.LG&start=0&max_resul
 hours: 72
 scoring:
   bias: -20
-  titles:
-    - title: "interpretability"
+  summary_multiplier: 0.2
+  words:
+    - word: "interpretability"
       value: 100
-    - title: "alignment"
+    - word: "alignment"
       value: 50
-    - title: "grokking"
+    - word: "grokking"
       value: 20
-    - title: "attack"
+    - word: "attack"
       value: 20
-    - title: "gender"
+    - word: "gender"
       value: -50
-    - title: "physics"
+    - word: "physics"
       value: -50
-    - title: "hydrologic"
+    - word: "hydrologic"
       value: -50
-    - title: "disease"
+    - word: "disease"
       value: -50
-    - title: "medical"
+    - word: "medical"
       value: -50
-    - title: "fluid dynamics"
+    - word: "fluid dynamics"
       value: -50
-    - title: "aerodynamics"
+    - word: "aerodynamics"
       value: -50
-    - title: "cloud"
+    - word: "cloud"
       value: -50
-    - title: "quantum"
+    - word: "quantum"
       value: -50
-    - title: "diffusion"
+    - word: "diffusion"
       value: -20
-    - title: "algebraic"
+    - word: "algebraic"
       value: -20
-    - title: "monte carlo"
+    - word: "monte carlo"
       value: -10
-    - title: "explainability"
+    - word: "explainability"
       value: -10
-    - title: "explainable"
+    - word: "explainable"
       value: -10
-    - title: "privacy"
+    - word: "privacy"
       value: -20
-    - title: "differential equation"
+    - word: "differential equation"
       value: -50
-    - title: "finite group"
+    - word: "finite group"
       value: -50
-    - title: "vulnerab"
+    - word: "vulnerab"
       value: 50
-    - title: "federated"
+    - word: "federated"
       value: -50
-    - title: "graph representation"
+    - word: "graph representation"
       value: -20
-    - title: "molecul"
+    - word: "molecul"
       value: -50
-    - title: "safe"
+    - word: "safe"
       value: 50
-    - title: "guarantee"
+    - word: "guarantee"
       value: 30
-    - title: "geometr"
+    - word: "geometr"
       value: -30
-    - title: "manufactur"
+    - word: "manufactur"
       value: -30
-    - title: "compiler"
+    - word: "compiler"
       value: -50
-    - title: "health"
+    - word: "health"
       value: -50
-    - title: "marketing"
+    - word: "marketing"
       value: -50
-    - title: "manifold"
+    - word: "manifold"
       value: -30
-    - title: "martingale"
+    - word: "martingale"
       value: -30
-    - title: "robotic"
+    - word: "robotic"
       value: -50
-    - title: "image"
+    - word: "image"
       value: -30
-    - title: "recommend"
+    - word: "recommend"
       value: -30
-    - title: "jailbreak"
+    - word: "jailbreak"
       value: 30
-    - title: "robust"
+    - word: "robust"
       value: 20
-    - title: "svm"
+    - word: "svm"
       value: -50
-    - title: "rheolog"
+    - word: "rheolog"
       value: -50
-    - title: "muscle"
+    - word: "muscle"
       value: -50
-    - title: "latency"
+    - word: "latency"
       value: -30  
-    - title: "accelerate"
+    - word: "accelerate"
       value: -10
-    - title: "performance"
+    - word: "performance"
       value: -10
-    - title: "energy"
+    - word: "energy"
       value: -10
-    - title: "precision"
+    - word: "precision"
       value: -10
-    - title: "ontology"
+    - word: "ontology"
       value: -10
-    - title: "compliance"
+    - word: "compliance"
       value: -30
-    - title: "random forest"
+    - word: "random forest"
       value: -50
-    - title: "regression"
+    - word: "regression"
       value: -30
-    - title: "arthritis"
+    - word: "arthritis"
       value: -200
-    - title: "heart"
+    - word: "heart"
       value: -50
-    - title: "knee"
+    - word: "knee"
       value: -50
-    - title: "matrix"
+    - word: "matrix"
       value: -30
-    - title: "matrices"
+    - word: "matrices"
       value: -30
-    - title: "collaborative"
+    - word: "collaborative"
       value: -30
-    - title: "traffic"
+    - word: "traffic"
       value: -50
-    - title: "climate"
+    - word: "climate"
       value: -50
-    - title: "atmospher"
+    - word: "atmospher"
       value: -50
-    - title: "social"
+    - word: "social"
       value: -30
-    - title: "backdoor"
+    - word: "backdoor"
       value: 20
-    - title: "portfolio"
+    - word: "portfolio"
       value: -50
-    - title: "compression"
+    - word: "compression"
       value: -30
-    - title: "streaming"
+    - word: "streaming"
       value: -30
-    - title: "smoothing"
+    - word: "smoothing"
       value: -30
-    - title: "translation"
+    - word: "translation"
       value: -30
-    - title: "autonomous"
+    - word: "autonomous"
       value: -50
-    - title: "wave"
+    - word: "wave"
       value: -30
-    - title: "cox"
+    - word: "cox"
       value: -20
-    - title: "regularization"
+    - word: "regularization"
       value: -10
-    - title: "sparse"
+    - word: "sparse"
       value: 20
+    - word: "embodied"
+      value: -50
+    - word: "data augmentation"
+      value: -30
+    - word: "nearest neighbor"
+      value: -30
+    - word: "prognosis"
+      value: -100
+    - word: "vision"
+      value: -50
+    - word: "cnn"
+      value: -50
+    - word: "topology"
+      value: -50
+    - word: "cluster"
+      value: -30
   authors:
     - author: "Adam Gleave"
       value: 300
