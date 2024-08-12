@@ -27,7 +27,7 @@ scoring:
       value: -50
     - word: "fluid dynamics"
       value: -50
-    - word: "aerodynamics"
+    - word: "aerodynamic"
       value: -50
     - word: "cloud"
       value: -50
@@ -81,6 +81,8 @@ scoring:
       value: -30
     - word: "recommend"
       value: -30
+    - word: "recommendation"
+      value: -50
     - word: "jailbreak"
       value: 30
     - word: "robust"
@@ -143,6 +145,8 @@ scoring:
       value: -30
     - word: "autonomous"
       value: -50
+    - word: "driving"
+      value: -50
     - word: "wave"
       value: -30
     - word: "cox"
@@ -167,6 +171,8 @@ scoring:
       value: -50
     - word: "topology"
       value: -50
+    - word: "topological"
+      value: -50
     - word: "cluster"
       value: -30
     - word: "ethereum"
@@ -175,6 +181,76 @@ scoring:
       value: -50
     - word: "crypto"
       value: -50
+    - word: "hardness"
+      value: -30
+    - word: "orbit"
+      value: -50
+    - word: "polynomial"
+      value: -50
+    - word: "earth"
+      value: -50
+    - word: "seismic"
+      value: -50
+    - word: "audio"
+      value: -50
+    - word: "music"
+      value: -50
+    - word: "multimodal"
+      value: -30
+    - word: "quantization"
+      value: -20
+    - word: "mixture-of-experts"
+      value: -20
+    - word: "estimation"
+      value: -30
+    - word: "sample size"
+      value: -30
+    - word: "confidence bound"
+      value: -20
+    - word: "feature selection"
+      value: -30
+    - word: "mathemat"
+      value: -50
+    - word: "semantic"
+      value: -10
+    - word: "weather"
+      value: -50
+    - word: "animal"
+      value: -50
+    - word: "signal modulation"
+      value: -20
+    - word: "ecg"
+      value: -50
+    - word: "electro"
+      value: -50
+    - word: "cardio"
+      value: -50
+    - word: "axiom"
+      value: -50
+    - word: "statistical model"
+      value: -30
+    - word: "kolmogorov"
+      value: -20
+    - word: "gaussian"
+      value: -20
+    - word: "anomaly"
+      value: -40
+    - word: "protein"
+      value: -50
+    - word: "biomarker"
+      value: -50
+    - word: "mri"
+      value: -20
+    - word: "alzheimer"
+      value: -50
+    - word: "java"
+      value: -20
+    - word: "bayesian optimization"
+      value: -20
+    - word: "cancer"
+      value: -50
+    - word: "omics"
+      value: -30
   authors:
     - author: "Adam Gleave"
       value: 300
