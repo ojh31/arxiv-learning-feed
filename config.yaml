@@ -2,7 +2,6 @@ sender: oskar.hollinsworth@gmail.com
 recipient: oskar.hollinsworth@gmail.com
 subject: "Today's Machine Learning Papers from arXiv"
 url: "http://export.arxiv.org/api/query?search_query=cat:cs.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending"
-hours: 72
 scoring:
   bias: -20
   summary_multiplier: 0.2
@@ -20,6 +19,8 @@ scoring:
     - word: "physics"
       value: -50
     - word: "hydrologic"
+      value: -50
+    - word: "hydrology"
       value: -50
     - word: "disease"
       value: -50
@@ -55,6 +56,8 @@ scoring:
       value: -50
     - word: "graph representation"
       value: -20
+    - word: "graph neural network"
+      value: -50
     - word: "molecul"
       value: -50
     - word: "safe"
@@ -250,6 +253,16 @@ scoring:
     - word: "cancer"
       value: -50
     - word: "omics"
+      value: -30
+    - word: "stock"
+      value: -50
+    - word: "gnn"
+      value: -50
+    - word: "unlearning"
+      value: 50
+    - word: "communication"
+      value: -50
+    - word: "spanning"
       value: -30
   authors:
     - author: "Adam Gleave"
