@@ -103,7 +103,9 @@ scoring:
     - word: "performance"
       value: -10
     - word: "energy"
-      value: -10
+      value: -20
+    - word: "home"
+      value: -20
     - word: "precision"
       value: -10
     - word: "ontology"
@@ -264,6 +266,28 @@ scoring:
       value: -50
     - word: "spanning"
       value: -30
+    - word: "tabular"
+      value: -50
+    - word: "hybrid"
+      value: -20
+    - word: "school"
+      value: -50
+    - word: "entropy"
+      value: -20
+    - word: "clinic"
+      value: -50
+    - word: "batteries"
+      value: -50
+    - word: "operational"
+      value: -30
+    - word: "resource"
+      value: -30
+    - word: "eco-"
+      value: -50
+    - word: "treatment"
+      value: -30
+    - word: "metastasis"
+      value: -100
   authors:
     - author: "Adam Gleave"
       value: 300
