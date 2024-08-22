@@ -89,7 +89,7 @@ scoring:
     - word: "jailbreak"
       value: 30
     - word: "robust"
-      value: 20
+      value: 50
     - word: "svm"
       value: -50
     - word: "rheolog"
@@ -288,6 +288,32 @@ scoring:
       value: -30
     - word: "metastasis"
       value: -100
+    - word: "multilingual"
+      value: -30
+    - word: "bandit"
+      value: -30
+    - word: "mixture"
+      value: -10
+    - word: "personal"
+      value: -30
+    - word: "linear programming"
+      value: -100
+    - word: "adversarial"
+      value: 50
+    - word: "decision tree"
+      value: -30
+    - word: "continual learning"
+      value: -30
+    - word: "pruning"
+      value: -30
+    - word: "spectral"
+      value: -30
+    - word: "transport"
+      value: -50
+    - word: "neurosymbolic"
+      value: -30
+    - word: "sustainability"
+      value: -50
   authors:
     - author: "Adam Gleave"
       value: 300
@@ -300,7 +326,7 @@ scoring:
     - author: "Samuel Marks"
       value: 20
     - author: "Kellin Pelrine"
-      value: 20
+      value: 50
   tags:
     - tag: "cs.CV"
       value: -200
