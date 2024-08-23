@@ -314,6 +314,20 @@ scoring:
       value: -30
     - word: "sustainability"
       value: -50
+    - word: "convolution"
+      value: -30
+    - word: "drug"
+      value: -50
+    - word: "directed graph"
+      value: -50
+    - word: "minimax"
+      value: -20
+    - word: "model merging"
+      value: -50
+    - word: "function approximation"
+      value: -50
+    - word: "financial"
+      value: -50
   authors:
     - author: "Adam Gleave"
       value: 300
