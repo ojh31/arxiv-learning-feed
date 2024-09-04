@@ -93,6 +93,7 @@ def create_content(config: dict) -> str:
             }
         )
     papers = sorted(papers, key=lambda x: x["score"], reverse=True)
+    print(f"Found {len(papers)} papers from {len(feed.entries)} entries")
 
     # Set up Jinja2 environment
     env = Environment(loader=FileSystemLoader(ROOT))
