@@ -328,6 +328,14 @@ scoring:
       value: -50
     - word: "financial"
       value: -50
+    - word: "receiver"
+      value: -100
+    - word: "time series"
+      value: -50
+    - word: "ml4vis"
+      value: -100
+    - word: "visualization"
+      value: -30
   authors:
     - author: "Adam Gleave"
       value: 300
