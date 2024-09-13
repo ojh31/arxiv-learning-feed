@@ -1,23 +1,14 @@
-import base64
-import os
 from datetime import datetime, time, timedelta
-from email.message import EmailMessage
 from pathlib import Path
 
 import feedparser
+import requests
 import yaml
-from google.auth.transport.requests import Request
-from google.oauth2.credentials import Credentials
-from google_auth_oauthlib.flow import InstalledAppFlow
-from googleapiclient.discovery import build
-from googleapiclient.errors import HttpError
 from jinja2 import Environment, FileSystemLoader
 
 from scoring import score_entry
 
 ROOT = Path(__file__).parent
-# If modifying these scopes, delete the file token.json.
-SCOPES = ["https://www.googleapis.com/auth/gmail.send"]
 
 
 def get_last_business_day():
@@ -25,49 +16,6 @@ def get_last_business_day():
     offset = max(1, (today.weekday() + 6) % 7 - 3)
     last_business_day = today - timedelta(days=offset)
     return datetime.combine(last_business_day, time.min)
-
-
-def get_gmail_service():
-    creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when authorization completes for the first time.
-    if os.path.exists("token.json"):
-        creds = Credentials.from_authorized_user_file("token.json", SCOPES)
-    # If there are no (valid) credentials available, let the user log in.
-    if not creds or not creds.valid:
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                ROOT / "credentials.json", SCOPES
-            )
-            creds = flow.run_local_server(port=0)
-        # Save the credentials for the next run
-        with open(ROOT / "token.json", "w") as token:
-            token.write(creds.to_json())
-
-    return build("gmail", "v1", credentials=creds)
-
-
-def send_message(service, message):
-    try:
-        message = service.users().messages().send(userId="me", body=message).execute()
-        print(f'Message Id: {message["id"]}')
-        return message
-    except HttpError as error:
-        print(f"An error occurred: {error}")
-        return None
-
-
-def create_message(sender, to, subject, html_content):
-    message = EmailMessage()
-    message.set_content(html_content, subtype="html")
-    message["to"] = to
-    message["from"] = sender
-    message["subject"] = subject
-
-    raw_message = base64.urlsafe_b64encode(message.as_bytes()).decode("utf-8")
-    return {"raw": raw_message}
 
 
 def create_content(config: dict) -> str:
@@ -104,6 +52,23 @@ def create_content(config: dict) -> str:
     return html_content
 
 
+def send_simple_message(subject: str, html: str):
+    with open("key.txt", "r") as file:
+        api_key = file.read()
+    response = requests.post(
+        "https://api.mailgun.net/v3/sandbox9e8f7a4f3d3d469c9c07ce895892fa11.mailgun.org/messages",
+        auth=("api", api_key),
+        data={
+            "from": "Excited User <mailgun@sandbox9e8f7a4f3d3d469c9c07ce895892fa11.mailgun.org>",
+            "to": "oskar.hollinsworth@gmail.com",
+            "subject": subject,
+            "html": html,
+        },
+    )
+    print(response.status_code)
+    print(response.text)
+
+
 def main():
     # Parse the yaml config
     with open(ROOT / "config.yaml", "r") as file:
@@ -116,14 +81,7 @@ def main():
         html_content = "<h1>An error occurred</h1>"
         html_content += f"<p>{e}</p>"
 
-    # Get Gmail service
-    service = get_gmail_service()
-
-    # Create and send the message
-    message = create_message(
-        config["sender"], config["recipient"], config["subject"], html_content
-    )
-    send_message(service, message)
+    send_simple_message(config["subject"], html_content)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,3 @@
-sender: oskar.hollinsworth@gmail.com
 recipient: oskar.hollinsworth@gmail.com
 subject: "Today's Machine Learning Papers from arXiv"
 url: "http://export.arxiv.org/api/query?search_query=cat:cs.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending"
@@ -349,6 +348,8 @@ scoring:
       value: 20
     - author: "Kellin Pelrine"
       value: 50
+    - author: "Buck Shlegeris"
+      value: 200
   tags:
     - tag: "cs.CV"
       value: -200
