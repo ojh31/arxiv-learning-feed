@@ -360,6 +360,8 @@ scoring:
       value: 100
     - author: "Doina Precup"
       value: 100
+    - author: "OpenAI"
+      value: 200
   tags:
     - tag: "cs.CV"
       value: -200
