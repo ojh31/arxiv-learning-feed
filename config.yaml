@@ -350,6 +350,16 @@ scoring:
       value: 50
     - author: "Buck Shlegeris"
       value: 200
+    - author: "Dario Amodei"
+      value: 100
+    - author: "Chris Olah"
+      value: 100
+    - author: "Jan Leike"
+      value: 100
+    - author: "Rohin Shah"
+      value: 100
+    - author: "Doina Precup"
+      value: 100
   tags:
     - tag: "cs.CV"
       value: -200
