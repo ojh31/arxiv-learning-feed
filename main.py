@@ -34,7 +34,7 @@ def create_content(config: dict) -> str:
         papers.append(
             {
                 "title": entry.title,
-                "authors": ", ".join(author.name for author in entry.authors),
+                "authors": ", ".join(author.name for author in entry.authors),  # type: ignore
                 "summary": entry.summary,
                 "link": entry.link,
                 "score": score_entry(entry, config),
@@ -59,8 +59,8 @@ def send_simple_message(subject: str, html: str):
         "https://api.mailgun.net/v3/sandbox9e8f7a4f3d3d469c9c07ce895892fa11.mailgun.org/messages",
         auth=("api", api_key),
         data={
-            "from": "Excited User <mailgun@sandbox9e8f7a4f3d3d469c9c07ce895892fa11.mailgun.org>",
-            "to": "oskar.hollinsworth@gmail.com",
+            "from": "arXiv cs.LG<mailgun@sandbox9e8f7a4f3d3d469c9c07ce895892fa11.mailgun.org>",
+            "to": "oskar@far.ai",
             "subject": subject,
             "html": html,
         },
