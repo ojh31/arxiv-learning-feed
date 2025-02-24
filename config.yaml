@@ -345,6 +345,8 @@ scoring:
       value: 200
     - word: "test-time compute"
       value: 200
+    - word: "finetuning api"
+      value: 100
   authors:
     - author: "Adam Gleave"
       value: 300
@@ -382,6 +384,10 @@ scoring:
       value: 100
     - author: "Xander Davies"
       value: 100
+    - author: "Lisa Schut"
+      value: 50
+    - author: "Yoshua Bengio"
+      value: 50
   tags:
     - tag: "cs.CV"
       value: -200
