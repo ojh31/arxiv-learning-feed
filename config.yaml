@@ -349,6 +349,18 @@ scoring:
       value: 100
     - word: "prompt injection"
       value: 100
+    - word: "grpo"
+      value: 50
+    - word: "gspo"
+      value: 50
+    - word: "misalignment"
+      value: 100
+    - word: "reasoning"
+      value: 50
+    - word: "chain of thought"
+      value: 50
+    - word: "deception"
+      value: 100
   authors:
     - author: "Adam Gleave"
       value: 300
@@ -391,6 +403,8 @@ scoring:
     - author: "Yoshua Bengio"
       value: 50
     - author: "Nicholas Carlini"
+      value: 100
+    - author: "Joseph Needham"
       value: 100
   tags:
     - tag: "cs.CV"
