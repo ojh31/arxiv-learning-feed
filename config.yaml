@@ -361,6 +361,8 @@ scoring:
       value: 50
     - word: "deception"
       value: 100
+    - word: "data filtering"
+      value: 100
   authors:
     - author: "Adam Gleave"
       value: 300
@@ -406,6 +408,10 @@ scoring:
       value: 100
     - author: "Joseph Needham"
       value: 100
+    - author: "Nina Panickssery"
+      value: 50
+    - author: "Erik Jones"
+      value: 50
   tags:
     - tag: "cs.CV"
       value: -200
