@@ -363,6 +363,14 @@ scoring:
       value: 100
     - word: "data filtering"
       value: 100
+    - word: "graph alignment"
+      value: -50
+    - word: "therapeutic"
+      value: -50
+    - word: "medication"
+      value: -50
+    - word: "therapy"
+      value: -50
   authors:
     - author: "Adam Gleave"
       value: 300
@@ -411,6 +419,10 @@ scoring:
     - author: "Nina Panickssery"
       value: 50
     - author: "Erik Jones"
+      value: 50
+    - author: "Mrinank Sharma"
+      value: 100
+    - author: "David Duvenaud"
       value: 50
   tags:
     - tag: "cs.CV"
