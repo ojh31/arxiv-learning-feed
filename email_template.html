@@ -2,15 +2,64 @@
 <html>
 <head>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            max-width: 800px; 
-            margin: 0 auto; 
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
             padding: 0 20px;
         }
-        .paper { 
+        .llm-section {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #2c3e50;
+        }
+        .llm-section h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .llm-paper {
+            margin-bottom: 12px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-left: 4px solid #2c3e50;
+            border-radius: 0 4px 4px 0;
+        }
+        .llm-paper-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 4px;
+        }
+        .llm-score {
+            color: #fff;
+            background-color: #2c3e50;
+            font-size: 0.85em;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 3px;
+            margin-right: 8px;
+            white-space: nowrap;
+        }
+        .llm-title {
+            font-weight: bold;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        .llm-title:hover {
+            text-decoration: underline;
+        }
+        .llm-authors {
+            color: #34495e;
+            font-size: 0.85em;
+            margin: 2px 0;
+        }
+        .llm-summary {
+            color: #333;
+            font-size: 0.9em;
+            margin: 4px 0 0 0;
+        }
+        .paper {
             margin-bottom: 5px;
-            border-bottom: 1px solid #ddd; 
+            border-bottom: 1px solid #ddd;
             padding-bottom: 5px;
             position: relative;
         }
@@ -18,33 +67,33 @@
             display: flex;
             align-items: center;
         }
-        .left-column { 
+        .left-column {
             flex: 3;
             display: flex;
             align-items: center;
         }
-        .right-column { 
+        .right-column {
             flex: 2;
             align-items: right;
         }
-        .title { 
-            font-weight: bold; 
-            color: #2c3e50; 
+        .title {
+            font-weight: bold;
+            color: #2c3e50;
             margin-left: 10px;
             text-decoration: none;
         }
         .title:hover {
             text-decoration: underline;
         }
-        .authors { 
-            color: #34495e; 
-            font-size: 0.9em; 
+        .authors {
+            color: #34495e;
+            font-size: 0.9em;
             text-align: right;
             margin: 0;
         }
-        .score { 
-            color: #7f8c8d; 
-            font-size: 0.9em; 
+        .score {
+            color: #7f8c8d;
+            font-size: 0.9em;
             white-space: nowrap;
             min-width: 80px;
         }
@@ -67,11 +116,51 @@
     </style>
 </head>
 <body>
+    {% if reviewed_papers %}
+    <div class="llm-section">
+        <h2>LLM-Reviewed Papers</h2>
+        {% for paper in reviewed_papers %}
+        <div class="llm-paper">
+            <div class="llm-paper-header">
+                <span class="llm-score">Relevance: {{ paper.llm_score }}/100</span>
+                <span class="llm-score" style="background-color: #7f8c8d;">Keyword: {{ paper.score }}</span>
+                <a href="{{ paper.link }}" class="llm-title">{{ paper.title }}</a>
+            </div>
+            <p class="llm-authors">{{ paper.authors }}</p>
+            <p class="llm-summary">{{ paper.llm_summary }}</p>
+            <p class="llm-summary"><em>{{ paper.llm_relevance }}</em></p>
+            {% if paper.full_summary %}
+            <p class="llm-summary" style="margin-top: 6px; padding-top: 6px; border-top: 1px solid #ddd;">{{ paper.full_summary }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if rest_reviewed %}
+    <hr style="border: none; border-top: 2px solid #bbb; margin: 20px 0;">
+    <div style="font-size: 0.85em;">
+        <h3 style="color: #7f8c8d;">Also Reviewed</h3>
+        {% for paper in rest_reviewed %}
+        <div class="llm-paper" style="padding: 8px; margin-bottom: 8px; border-left-color: #95a5a6;">
+            <div class="llm-paper-header">
+                <span class="llm-score" style="background-color: #95a5a6;">Relevance: {{ paper.llm_score }}/100</span>
+                <span class="llm-score" style="background-color: #b0b8bf;">Keyword: {{ paper.score }}</span>
+                <a href="{{ paper.link }}" class="llm-title" style="font-size: 0.95em;">{{ paper.title }}</a>
+            </div>
+            <p class="llm-summary" style="font-size: 0.85em;">{{ paper.llm_summary }}</p>
+            <p class="llm-summary" style="font-size: 0.85em;"><em>{{ paper.llm_relevance }}</em></p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <h2>All Papers</h2>
     {% for paper in papers %}
     <div class="paper">
         <div class="paper-content">
             <div class="left-column">
-                <span class="score">Score: {{ paper.score }}</span>
+                <span class="score">Keyword: {{ paper.score }}</span>
                 <a href="{{ paper.link }}" class="title">{{ paper.title }}</a>
             </div>
             <div class="right-column">
