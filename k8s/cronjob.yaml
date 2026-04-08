@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: arxiv-learning-feed
+spec:
+  schedule: "0 12 * * 1-5"  # weekdays at noon UTC
+  jobTemplate:
+    metadata:
+      labels:
+        kueue.x-k8s.io/queue-name: farai
+        cronjob-name: arxiv-learning-feed
+    spec:
+      suspend: true
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: Never
+          priorityClassName: normal-batch
+          imagePullSecrets:
+            - name: docker
+          containers:
+            - name: arxiv-feed
+              image: "ghcr.io/alignmentresearch/arxiv-learning-feed:latest"
+              resources:
+                requests:
+                  cpu: 1
+                  memory: "512Mi"
+                limits:
+                  memory: "1Gi"
+              envFrom:
+                - secretRef:
+                    name: api-keys
+              env:
+                - name: MAILGUN_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: arxiv-feed-secrets
+                      key: mailgun-api-key
+          podFailurePolicy:
+            rules:
+              - action: Ignore
+                onPodConditions:
+                  - type: DisruptionTarget
+                    status: "True"

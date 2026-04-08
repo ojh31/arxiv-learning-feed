@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, time, timedelta
 from pathlib import Path
 
@@ -100,8 +101,10 @@ def create_content(config: dict) -> str:
 
 
 def send_simple_message(subject: str, html: str):
-    with open("key.txt", "r") as file:
-        api_key = file.read()
+    api_key = os.environ.get("MAILGUN_API_KEY")
+    if not api_key:
+        with open(ROOT / "key.txt", "r") as file:
+            api_key = file.read().strip()
     response = requests.post(
         "https://api.mailgun.net/v3/sandbox9e8f7a4f3d3d469c9c07ce895892fa11.mailgun.org/messages",  # noqa: E501
         auth=("api", api_key),

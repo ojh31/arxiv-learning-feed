@@ -1,0 +1,9 @@
+venv/
+output/
+.env
+key.txt
+.git/
+.vscode/
+__pycache__/
+*.json
+k8s/
