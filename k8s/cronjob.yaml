@@ -12,6 +12,12 @@ spec:
     spec:
       suspend: true
       backoffLimit: 2
+      podFailurePolicy:
+        rules:
+          - action: Ignore
+            onPodConditions:
+              - type: DisruptionTarget
+                status: "True"
       template:
         spec:
           restartPolicy: Never
@@ -36,9 +42,3 @@ spec:
                     secretKeyRef:
                       name: arxiv-feed-secrets
                       key: mailgun-api-key
-          podFailurePolicy:
-            rules:
-              - action: Ignore
-                onPodConditions:
-                  - type: DisruptionTarget
-                    status: "True"
