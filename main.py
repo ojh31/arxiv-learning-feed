@@ -4,9 +4,13 @@ from pathlib import Path
 import feedparser
 import requests
 import yaml
+from dotenv import load_dotenv
 from jinja2 import Environment, FileSystemLoader
 
+from llm_judge import judge_papers, summarize_full_text
 from scoring import score_entry
+
+load_dotenv()
 
 ROOT = Path(__file__).parent
 
@@ -43,12 +47,55 @@ def create_content(config: dict) -> str:
     papers = sorted(papers, key=lambda x: x["score"], reverse=True)
     print(f"Found {len(papers)} papers from {len(feed.entries)} entries")
 
+    # LLM judge: review papers above keyword score threshold
+    llm_threshold = -30
+    llm_display_threshold = 50
+    candidates = [p for p in papers if p["score"] >= llm_threshold]
+    print(f"Sending {len(candidates)} papers to LLM judge (score >= {llm_threshold})")
+
+    reviewed_papers = []
+    rest_reviewed = []
+    if candidates:
+        try:
+            reviews = judge_papers(candidates)
+            review_by_index = {r["index"]: r for r in reviews}
+            for i, paper in enumerate(candidates):
+                if i in review_by_index:
+                    r = review_by_index[i]
+                    enriched = {
+                        **paper,
+                        "llm_score": r["score"],
+                        "llm_summary": r["summary"],
+                        "llm_relevance": r["relevance"],
+                    }
+                    if r["score"] > llm_display_threshold:
+                        reviewed_papers.append(enriched)
+                    elif r["score"] > 20:
+                        rest_reviewed.append(enriched)
+            reviewed_papers.sort(key=lambda x: x["llm_score"], reverse=True)
+            rest_reviewed.sort(key=lambda x: x["llm_score"], reverse=True)
+            print(f"LLM judge: {len(reviewed_papers)} top, {len(rest_reviewed)} rest")
+
+            # Fetch full text and summarize top papers with Haiku
+            if reviewed_papers:
+                for j, p in enumerate(reviewed_papers):
+                    p["_idx"] = j
+                print(f"Summarizing {len(reviewed_papers)} top papers with Haiku...")
+                full_summaries = summarize_full_text(reviewed_papers)
+                for p in reviewed_papers:
+                    p["full_summary"] = full_summaries.get(p["_idx"], "")
+                    del p["_idx"]
+        except Exception as e:
+            print(f"LLM judge failed: {e}")
+
     # Set up Jinja2 environment
     env = Environment(loader=FileSystemLoader(ROOT))
     template = env.get_template("email_template.html")
 
     # Render the template with our data
-    html_content = template.render(papers=papers)
+    html_content = template.render(
+        papers=papers, reviewed_papers=reviewed_papers, rest_reviewed=rest_reviewed
+    )
     return html_content
 
 
