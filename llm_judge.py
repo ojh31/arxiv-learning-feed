@@ -78,16 +78,31 @@ def judge_papers(papers: list[dict]) -> list[dict]:
         + "\n\n---\n\n".join(paper_descriptions)
     )
 
-    # Call Claude Opus for judging
-    response = client.messages.create(
+    # Call Claude Opus for judging — use prefill and streaming for long requests
+    result_parts = []
+    with client.messages.stream(
         model="claude-opus-4-20250514",
-        max_tokens=4096,
+        max_tokens=16384,
         system=SYSTEM_PROMPT,
-        messages=[{"role": "user", "content": user_message}],
-    )
+        messages=[
+            {"role": "user", "content": user_message},
+            {"role": "assistant", "content": "["},
+        ],
+    ) as stream:
+        for text in stream.text_stream:
+            result_parts.append(text)
 
-    result_text = response.content[0].text
-    reviews = json.loads(result_text)
+    result_text = "[" + "".join(result_parts)
+    # Strip markdown fences if present
+    cleaned = result_text.strip()
+    if cleaned.startswith("```"):
+        cleaned = re.sub(r"^```(?:json)?\s*", "", cleaned)
+        cleaned = re.sub(r"\s*```$", "", cleaned)
+    try:
+        reviews = json.loads(cleaned)
+    except json.JSONDecodeError:
+        print(f"Failed to parse LLM response: {result_text[:500]}")
+        raise
     return reviews
 
 

@@ -33,12 +33,14 @@ spec:
                   memory: "512Mi"
                 limits:
                   memory: "1Gi"
-              envFrom:
-                - secretRef:
-                    name: api-keys
               env:
                 - name: MAILGUN_API_KEY
                   valueFrom:
                     secretKeyRef:
                       name: arxiv-feed-secrets
                       key: mailgun-api-key
+                - name: ANTHROPIC_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: arxiv-feed-secrets
+                      key: ANTHROPIC_API_KEY
