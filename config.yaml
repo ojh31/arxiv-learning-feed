@@ -1,6 +1,6 @@
 recipient: oskar.hollinsworth@gmail.com
 subject: "Today's Machine Learning Papers from arXiv"
-url: "http://export.arxiv.org/api/query?search_query=cat:cs.LG&start=0&max_results=300&sortBy=submittedDate&sortOrder=descending"
+url: "http://export.arxiv.org/api/query?search_query=cat:cs.LG+OR+cat:cs.AI&start=0&max_results=1000&sortBy=submittedDate&sortOrder=descending"
 scoring:
   bias: -20
   summary_multiplier: 0.2

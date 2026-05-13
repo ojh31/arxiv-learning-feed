@@ -3,6 +3,7 @@ from datetime import datetime, time, timedelta
 from pathlib import Path
 
 import feedparser
+import markdown as md
 import requests
 import yaml
 from dotenv import load_dotenv
@@ -84,7 +85,8 @@ def create_content(config: dict) -> str:
                 print(f"Summarizing {len(reviewed_papers)} top papers with Haiku...")
                 full_summaries = summarize_full_text(reviewed_papers)
                 for p in reviewed_papers:
-                    p["full_summary"] = full_summaries.get(p["_idx"], "")
+                    raw = full_summaries.get(p["_idx"], "")
+                    p["full_summary"] = md.markdown(raw) if raw else ""
                     del p["_idx"]
         except Exception as e:
             print(f"LLM judge failed: {e}")
@@ -109,7 +111,7 @@ def send_simple_message(subject: str, html: str):
         "https://api.mailgun.net/v3/sandbox9e8f7a4f3d3d469c9c07ce895892fa11.mailgun.org/messages",  # noqa: E501
         auth=("api", api_key),
         data={
-            "from": "arXiv cs.LG<mailgun@sandbox9e8f7a4f3d3d469c9c07ce895892fa11.mailgun.org>",  # noqa: E501
+            "from": "arXiv cs.LG+cs.AI<mailgun@sandbox9e8f7a4f3d3d469c9c07ce895892fa11.mailgun.org>",  # noqa: E501
             "to": "oskar@far.ai",
             "subject": subject,
             "html": html,

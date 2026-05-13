@@ -57,6 +57,25 @@
             font-size: 0.9em;
             margin: 4px 0 0 0;
         }
+        .full-summary h1,
+        .full-summary h2,
+        .full-summary h3,
+        .full-summary h4 {
+            font-size: 1em;
+            color: #2c3e50;
+            margin: 8px 0 4px 0;
+        }
+        .full-summary ul,
+        .full-summary ol {
+            margin: 4px 0;
+            padding-left: 20px;
+        }
+        .full-summary li {
+            margin: 2px 0;
+        }
+        .full-summary p {
+            margin: 4px 0;
+        }
         .paper {
             margin-bottom: 5px;
             border-bottom: 1px solid #ddd;
@@ -130,7 +149,7 @@
             <p class="llm-summary">{{ paper.llm_summary }}</p>
             <p class="llm-summary"><em>{{ paper.llm_relevance }}</em></p>
             {% if paper.full_summary %}
-            <p class="llm-summary" style="margin-top: 6px; padding-top: 6px; border-top: 1px solid #ddd;">{{ paper.full_summary }}</p>
+            <div class="llm-summary full-summary" style="margin-top: 6px; padding-top: 6px; border-top: 1px solid #ddd;">{{ paper.full_summary | safe }}</div>
             {% endif %}
         </div>
         {% endfor %}

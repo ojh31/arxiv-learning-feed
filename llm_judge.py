@@ -61,7 +61,9 @@ def judge_papers(papers: list[dict]) -> list[dict]:
 
     Returns list of dicts with keys: index, score, summary, relevance.
     """
-    client = anthropic.Anthropic(api_key=os.environ["ANTHROPIC_API_KEY"])
+    client = anthropic.Anthropic(
+        api_key=os.environ["ANTHROPIC_API_KEY"], timeout=1800.0
+    )
 
     # Build the user message with all papers
     paper_descriptions = []
@@ -78,21 +80,20 @@ def judge_papers(papers: list[dict]) -> list[dict]:
         + "\n\n---\n\n".join(paper_descriptions)
     )
 
-    # Call Claude Opus for judging — use prefill and streaming for long requests
+    # Call Claude Sonnet for judging — stream because the response is long
     result_parts = []
     with client.messages.stream(
-        model="claude-opus-4-20250514",
-        max_tokens=16384,
+        model="claude-sonnet-4-6",
+        max_tokens=64000,
         system=SYSTEM_PROMPT,
         messages=[
             {"role": "user", "content": user_message},
-            {"role": "assistant", "content": "["},
         ],
     ) as stream:
         for text in stream.text_stream:
             result_parts.append(text)
 
-    result_text = "[" + "".join(result_parts)
+    result_text = "".join(result_parts)
     # Strip markdown fences if present
     cleaned = result_text.strip()
     if cleaned.startswith("```"):
@@ -150,16 +151,20 @@ def summarize_full_text(papers: list[dict]) -> dict[int, str]:
         try:
             response = client.messages.create(
                 model="claude-haiku-4-5-20251001",
-                max_tokens=512,
+                max_tokens=2048,
                 messages=[
                     {
                         "role": "user",
                         "content": (
-                            "Summarize this paper as a bullet-point list of "
-                            "key findings and points of interest. Use short, "
-                            "easy-to-read bullets. Focus on what's novel, "
-                            "what the main results are, and any surprising "
-                            "or important takeaways.\n\n" + full_text
+                            "Summarize this paper in 5-8 short bullets "
+                            "(one line each, ~15-25 words). Focus on what's "
+                            "novel, the main results, and any surprising "
+                            "takeaways — skip background and methodology "
+                            "details unless they're the contribution. Aim "
+                            "for a total length of ~150 words. Use markdown "
+                            "bullets (`- item`) and `**bold**` for emphasis; "
+                            "do NOT use markdown headers (`#`, `##`, etc.).\n\n"
+                            + full_text
                         ),
                     }
                 ],
