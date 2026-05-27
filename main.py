@@ -25,8 +25,18 @@ def get_last_business_day():
 
 
 def create_content(config: dict) -> str:
-    # Parse the arXiv feed
+    # Parse the arXiv feed. arXiv 301-redirects http->https and 429s on rate
+    # limits; feedparser yields zero entries in both cases, so fail loudly
+    # instead of silently sending an empty digest.
     feed = feedparser.parse(config["url"])
+    status = feed.get("status")
+    if status != 200:
+        raise RuntimeError(
+            f"arXiv feed returned HTTP {status} for {config['url']!r} "
+            f"({len(feed.entries)} entries)"
+        )
+    if not feed.entries:
+        raise RuntimeError(f"arXiv feed returned no entries for {config['url']!r}")
     last_business_day = get_last_business_day()
     filtered_entries: list[feedparser.FeedParserDict] = [
         entry
