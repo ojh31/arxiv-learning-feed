@@ -1,4 +1,5 @@
 import os
+import time as time_module
 from datetime import datetime, time, timedelta
 from pathlib import Path
 
@@ -24,17 +25,47 @@ def get_last_business_day():
     return datetime.combine(last_business_day, time.min)
 
 
+# arXiv's API rate-limits aggressive clients with HTTP 429. Identify
+# ourselves with a User-Agent (anonymous requests are throttled harder) and
+# retry with exponential backoff, honoring any Retry-After header.
+ARXIV_USER_AGENT = "arxiv-learning-feed/1.0 (mailto:oskar@far.ai)"
+ARXIV_MAX_RETRIES = 5
+ARXIV_BACKOFF_BASE = 5  # seconds; doubled each retry
+
+
+def fetch_feed(url: str) -> feedparser.FeedParserDict:
+    headers = {"User-Agent": ARXIV_USER_AGENT}
+    last_status: int | None = None
+    for attempt in range(ARXIV_MAX_RETRIES):
+        response = requests.get(url, headers=headers, timeout=60)
+        last_status = response.status_code
+        if response.status_code == 200:
+            return feedparser.parse(response.content)
+        if response.status_code in (429, 503) and attempt < ARXIV_MAX_RETRIES - 1:
+            retry_after = response.headers.get("Retry-After")
+            delay = (
+                int(retry_after)
+                if retry_after and retry_after.isdigit()
+                else ARXIV_BACKOFF_BASE * (2**attempt)
+            )
+            print(
+                f"arXiv feed returned HTTP {response.status_code}, "
+                f"retrying in {delay}s (attempt {attempt + 1}/{ARXIV_MAX_RETRIES})"
+            )
+            time_module.sleep(delay)
+            continue
+        break
+    raise RuntimeError(
+        f"arXiv feed returned HTTP {last_status} for {url!r} "
+        f"after {ARXIV_MAX_RETRIES} attempts"
+    )
+
+
 def create_content(config: dict) -> str:
-    # Parse the arXiv feed. arXiv 301-redirects http->https and 429s on rate
-    # limits; feedparser yields zero entries in both cases, so fail loudly
+    # Fetch the arXiv feed with retries. A non-200 raises in fetch_feed; an
+    # empty entry list on a 200 still means a bad response, so fail loudly
     # instead of silently sending an empty digest.
-    feed = feedparser.parse(config["url"])
-    status = feed.get("status")
-    if status != 200:
-        raise RuntimeError(
-            f"arXiv feed returned HTTP {status} for {config['url']!r} "
-            f"({len(feed.entries)} entries)"
-        )
+    feed = fetch_feed(config["url"])
     if not feed.entries:
         raise RuntimeError(f"arXiv feed returned no entries for {config['url']!r}")
     last_business_day = get_last_business_day()
