@@ -28,9 +28,13 @@ def get_last_business_day():
 # arXiv's API rate-limits aggressive clients with HTTP 429. Identify
 # ourselves with a User-Agent (anonymous requests are throttled harder) and
 # retry with exponential backoff, honoring any Retry-After header.
+# A transient 429 can outlast a short retry budget, so back off generously: a
+# daily digest can afford a few minutes of waiting rather than failing outright.
+# These delays sum to 10+20+40+80+160+160+160 = ~10 min across 8 attempts.
 ARXIV_USER_AGENT = "arxiv-learning-feed/1.0 (mailto:oskar@far.ai)"
-ARXIV_MAX_RETRIES = 5
-ARXIV_BACKOFF_BASE = 5  # seconds; doubled each retry
+ARXIV_MAX_RETRIES = 8
+ARXIV_BACKOFF_BASE = 10  # seconds; doubled each retry
+ARXIV_BACKOFF_MAX = 160  # cap per-retry delay
 
 
 def fetch_feed(url: str) -> feedparser.FeedParserDict:
@@ -46,7 +50,7 @@ def fetch_feed(url: str) -> feedparser.FeedParserDict:
             delay = (
                 int(retry_after)
                 if retry_after and retry_after.isdigit()
-                else ARXIV_BACKOFF_BASE * (2**attempt)
+                else min(ARXIV_BACKOFF_BASE * (2**attempt), ARXIV_BACKOFF_MAX)
             )
             print(
                 f"arXiv feed returned HTTP {response.status_code}, "
