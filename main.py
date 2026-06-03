@@ -1,4 +1,5 @@
 import os
+import re
 import time as time_module
 from datetime import datetime, time, timedelta
 from pathlib import Path
@@ -25,11 +26,11 @@ def get_last_business_day():
     return datetime.combine(last_business_day, time.min)
 
 
-# arXiv's API rate-limits aggressive clients with HTTP 429. Identify
-# ourselves with a User-Agent (anonymous requests are throttled harder) and
-# retry with exponential backoff, honoring any Retry-After header.
-# A transient 429 can outlast a short retry budget, so back off generously: a
-# daily digest can afford a few minutes of waiting rather than failing outright.
+# We fetch the daily listing from rss.arxiv.org (CDN-backed) rather than the
+# export.arxiv.org API: the API rate-limits by IP and our shared cluster egress
+# IP gets blocked for stretches longer than any sane retry budget. The RSS feed
+# rarely throttles, but keep the retry/backoff as belt-and-braces for transient
+# 429/503s, identifying ourselves with a User-Agent and honoring Retry-After.
 # These delays sum to 10+20+40+80+160+160+160 = ~10 min across 8 attempts.
 ARXIV_USER_AGENT = "arxiv-learning-feed/1.0 (mailto:oskar@far.ai)"
 ARXIV_MAX_RETRIES = 8
@@ -72,12 +73,23 @@ def create_content(config: dict) -> str:
     feed = fetch_feed(config["url"])
     if not feed.entries:
         raise RuntimeError(f"arXiv feed returned no entries for {config['url']!r}")
+    # The RSS feed mixes announce types; keep new submissions and cross-lists,
+    # drop replacements (papers we've already seen). The date filter guards
+    # against arXiv holidays, when the feed re-serves a stale announcement.
     last_business_day = get_last_business_day()
     filtered_entries: list[feedparser.FeedParserDict] = [
         entry
         for entry in feed.entries
-        if datetime(*entry.published_parsed[:6]) >= last_business_day
+        if entry.get("arxiv_announce_type", "new") in ("new", "cross")
+        and datetime(*entry.published_parsed[:6]) >= last_business_day
     ]
+
+    # RSS summaries are prefixed with "arXiv:<id> Announce Type: <type>
+    # Abstract: " — strip it so scoring, the LLM judge, and the email all see
+    # just the abstract.
+    prefix_re = re.compile(r"^arXiv:\S+\s+Announce Type:\s+\S+\s*\nAbstract:\s*")
+    for entry in filtered_entries:
+        entry["summary"] = prefix_re.sub("", entry.summary)
 
     # Prepare paper data
     papers = []
