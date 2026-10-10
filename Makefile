@@ -26,4 +26,4 @@ verify:
 # Optional: run immediately instead of waiting for the schedule (only if asked).
 # Volcano clusters reject hand-submitted batch/v1 Jobs, so route through fl run.
 run-now:
-	kubectl create job --from=cronjob/$(APP) $(APP)-manual-$$(date +%s) --dry-run=client -o yaml | fl run -f -
+	kubectl create job --from=cronjob/$(APP) $(APP)-manual-$$(date +%s) --dry-run=client -o yaml | grep -v "creationTimestamp: null" | fl run -f -
