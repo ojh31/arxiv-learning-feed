@@ -4,13 +4,12 @@ metadata:
   name: arxiv-learning-feed
 spec:
   schedule: "0 12 * * 1-5"  # weekdays at noon UTC
+  concurrencyPolicy: Forbid
   jobTemplate:
     metadata:
       labels:
-        kueue.x-k8s.io/queue-name: farai
         cronjob-name: arxiv-learning-feed
     spec:
-      suspend: true
       backoffLimit: 2
       podFailurePolicy:
         rules:
@@ -21,7 +20,7 @@ spec:
       template:
         spec:
           restartPolicy: Never
-          priorityClassName: normal-batch
+          priorityClassName: cpu-normal-batch
           imagePullSecrets:
             - name: docker
           containers:
